@@ -41,7 +41,7 @@ TODO
 
 [ ] Build CI pipeline
 
-[ ] Deploy to 
+[ ] Possibly deploy to Docker?
 
 [ ] Get prices for each store working
 
