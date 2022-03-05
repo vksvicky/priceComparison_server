@@ -37,6 +37,8 @@ TODO
 
 [ ] TDD approach to the solution
 
+[ ] Moduler solution
+
 [ ] Update the Excel sheet(s) with required items
 
 [ ] Build CI pipeline
