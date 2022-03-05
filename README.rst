@@ -29,55 +29,37 @@ Features
 * Basic feature to make sure screen scraping is working too retrieve product cost
 
 
-..
-  Checkbox styles
-
-.. |check| raw:: html
-
-    <input checked=""  type="checkbox">
-
-.. |check_| raw:: html
-
-    <input checked=""  disabled="" type="checkbox">
-
-.. |uncheck| raw:: html
-
-    <input type="checkbox">
-
-.. |uncheck_| raw:: html
-
-    <input disabled="" type="checkbox">
 
 TODO
 ====
 
-|check| Update folder structure
+[checkbox:checked] Update folder structure
 
-|uncheck| TDD approach to the solution
+[checkbox:unchecked] TDD approach to the solution
 
-|uncheck| Update the Excel sheet(s) with required items
+[checkbox:unchecked] Update the Excel sheet(s) with required items
 
-|uncheck| Build CI pipeline
+[checkbox:unchecked] Build CI pipeline
 
-|uncheck| Deploy to 
+[checkbox:unchecked] Deploy to 
 
-|uncheck| Get prices for each store working
+[checkbox:unchecked] Get prices for each store working
 
-|uncheck| Parallel process to retrieve product prices from each provider
+[checkbox:unchecked] Parallel process to retrieve product prices from each provider
 
-|uncheck| Create a sheet in Excel to find the cheapest store for the listed products
+[checkbox:unchecked] Create a sheet in Excel to find the cheapest store for the listed products
 
-|uncheck| Add quantity column for products
+[checkbox:unchecked] Add quantity column for products
 
-|uncheck| Add a column to state availability
+[checkbox:unchecked] Add a column to state availability
 
-|uncheck| Identify if the product is in stock and update excel cost accordingly
+[checkbox:unchecked] Identify if the product is in stock and update excel cost accordingly
 
-|uncheck| Identify offers if available and add relevant items update cost accordingly
+[checkbox:unchecked] Identify offers if available and add relevant items update cost accordingly
 
-|uncheck| Create a shopping list sheet and identify the cost
+[checkbox:unchecked] Create a shopping list sheet and identify the cost
 
-|uncheck| For the created shopping cart compare across the listed providers and find the cheapest and show the store name
+[checkbox:unchecked] For the created shopping cart compare across the listed providers and find the cheapest and show the store name
 
 
 Credits
