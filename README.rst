@@ -3,8 +3,8 @@ priceComparison
 ===============
 
 
-.. image:: https://img.shields.io/pypi/v/pricecomparison.svg
-        :target: https://pypi.python.org/pypi/pricecomparison
+.. .. image:: https://img.shields.io/pypi/v/pricecomparison.svg
+..         :target: https://pypi.python.org/pypi/pricecomparison
 
 .. image:: https://img.shields.io/travis/vksvicky/pricecomparison.svg
         :target: https://app.travis-ci.com/github/vksvicky/priceComparison
