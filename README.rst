@@ -33,33 +33,33 @@ Features
 TODO
 ====
 
-[checkbox:checked] Update folder structure
+[X] Update folder structure
 
-[checkbox:unchecked] TDD approach to the solution
+[ ] TDD approach to the solution
 
-[checkbox:unchecked] Update the Excel sheet(s) with required items
+[ ] Update the Excel sheet(s) with required items
 
-[checkbox:unchecked] Build CI pipeline
+[ ] Build CI pipeline
 
-[checkbox:unchecked] Deploy to 
+[ ] Deploy to 
 
-[checkbox:unchecked] Get prices for each store working
+[ ] Get prices for each store working
 
-[checkbox:unchecked] Parallel process to retrieve product prices from each provider
+[ ] Parallel process to retrieve product prices from each provider
 
-[checkbox:unchecked] Create a sheet in Excel to find the cheapest store for the listed products
+[ ] Create a sheet in Excel to find the cheapest store for the listed products
 
-[checkbox:unchecked] Add quantity column for products
+[ ] Add quantity column for products
 
-[checkbox:unchecked] Add a column to state availability
+[ ] Add a column to state availability
 
-[checkbox:unchecked] Identify if the product is in stock and update excel cost accordingly
+[ ] Identify if the product is in stock and update excel cost accordingly
 
-[checkbox:unchecked] Identify offers if available and add relevant items update cost accordingly
+[ ] Identify offers if available and add relevant items update cost accordingly
 
-[checkbox:unchecked] Create a shopping list sheet and identify the cost
+[ ] Create a shopping list sheet and identify the cost
 
-[checkbox:unchecked] For the created shopping cart compare across the listed providers and find the cheapest and show the store name
+[ ] For the created shopping cart compare across the listed providers and find the cheapest and show the store name
 
 
 Credits
