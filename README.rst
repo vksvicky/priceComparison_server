@@ -20,7 +20,7 @@ Compare high-street stores product price
 
 
 * Free software: GNU General Public License v3
-* Documentation: https://pricecomparison.readthedocs.io.
+* Documentation: https://pricecomparison.readthedocs.io/en/latest/
 
 
 Features
