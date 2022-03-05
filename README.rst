@@ -7,7 +7,7 @@ priceComparison
         :target: https://pypi.python.org/pypi/pricecomparison
 
 .. image:: https://img.shields.io/travis/vksvicky/pricecomparison.svg
-        :target: https://travis-ci.com/vksvicky/pricecomparison
+        :target: https://github.com/vksvicky/priceComparison/actions/workflows/python-package.yml
 
 .. image:: https://readthedocs.org/projects/pricecomparison/badge/?version=latest
         :target: https://pricecomparison.readthedocs.io/en/latest/?version=latest
@@ -41,7 +41,9 @@ TODO
 
 [ ] Update the Excel sheet(s) with required items
 
-[ ] Build CI pipeline
+[X] Build CI pipeline - Travis
+
+[X] Added Codacy Security Scan, CodeQL & Checkmarx CxFlow
 
 [ ] Possibly deploy to Docker?
 
