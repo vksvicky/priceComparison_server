@@ -7,7 +7,7 @@ priceComparison
         :target: https://pypi.python.org/pypi/pricecomparison
 
 .. image:: https://img.shields.io/travis/vksvicky/pricecomparison.svg
-        :target: https://github.com/vksvicky/priceComparison/actions/workflows/python-package.yml
+        :target: https://app.travis-ci.com/github/vksvicky/priceComparison
 
 .. image:: https://readthedocs.org/projects/pricecomparison/badge/?version=latest
         :target: https://pricecomparison.readthedocs.io/en/latest/?version=latest
