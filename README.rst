@@ -67,6 +67,12 @@ TODO
 
 [ ] For the created shopping cart compare across the listed providers and find the cheapest and show the store name
 
+[ ] Create a master sheet of stores for selection and a master sheet for products
+
+[ ] Ability to create a shopping cart (in the format) + select a store
+
+[ ] Ability to create a shopping cart (in the format) + select a stores + best price across selected stores
+
 
 Credits
 -------
