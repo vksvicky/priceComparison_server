@@ -2,25 +2,23 @@
 priceComparison
 ===============
 
+.. image:: https://img.shields.io/badge/License-GPL3.0-yellow.svg?style=social
+        :target: https://www.gnu.org/licenses
+        :alt: License
 
-.. .. image:: https://img.shields.io/pypi/v/pricecomparison.svg
-..         :target: https://pypi.python.org/pypi/pricecomparison
-
-.. image:: https://img.shields.io/travis/vksvicky/pricecomparison.svg
+.. image:: https://img.shields.io/travis/vksvicky/pricecomparison.svg?style=social
         :target: https://app.travis-ci.com/github/vksvicky/priceComparison
+        :alt: CI Build
 
-.. image:: https://readthedocs.org/projects/pricecomparison/badge/?version=latest
+.. image:: https://readthedocs.org/projects/pricecomparison/badge/??style=social&version=latest
         :target: https://pricecomparison.readthedocs.io/en/latest/?version=latest
         :alt: Documentation Status
 
-
-
+.. image:: https://img.shields.io/github/issues/vksvicky/priceComparison?style=social
+        :target: https://github.com/vksvicky/priceComparison/issues
+        :alt: GitHub issues
 
 Compare high-street stores product price
-
-
-* Free software: GNU General Public License v3
-* Documentation: https://pricecomparison.readthedocs.io/en/latest/
 
 
 Features
