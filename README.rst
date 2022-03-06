@@ -18,6 +18,10 @@ priceComparison
         :target: https://github.com/vksvicky/priceComparison/issues
         :alt: GitHub issues
 
+
+Description
+-----------
+
 Compare high-street stores product price
 
 
