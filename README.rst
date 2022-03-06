@@ -2,19 +2,19 @@
 priceComparison
 ===============
 
-.. image:: https://img.shields.io/badge/License-GPL3.0-yellow.svg?style=social
+.. image:: https://img.shields.io/badge/License-GPL3.0-yellow.svg?style=plastic
         :target: https://www.gnu.org/licenses
         :alt: License
 
-.. image:: https://img.shields.io/travis/vksvicky/pricecomparison.svg?style=social
+.. image:: https://img.shields.io/travis/vksvicky/pricecomparison.svg?style=plastic
         :target: https://app.travis-ci.com/github/vksvicky/priceComparison
         :alt: CI Build
 
-.. image:: https://readthedocs.org/projects/pricecomparison/badge/??style=social&version=latest
+.. image:: https://readthedocs.org/projects/pricecomparison/badge/?style=plastic&version=latest
         :target: https://pricecomparison.readthedocs.io/en/latest/?version=latest
         :alt: Documentation Status
 
-.. image:: https://img.shields.io/github/issues/vksvicky/priceComparison?style=social
+.. image:: https://img.shields.io/github/issues/vksvicky/priceComparison?style=plastic
         :target: https://github.com/vksvicky/priceComparison/issues
         :alt: GitHub issues
 
