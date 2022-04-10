@@ -50,6 +50,15 @@ TODO
 [ ] Possibly deploy to Docker?
 
 [ ] Get prices for each store working
+        [X] Sainsburys
+        [X] Tesco
+        [ ] Co-op
+        [ ] Ocado
+        [ ] Morissons
+        [ ] Lidl
+        [ ] Asda
+        [ ] M&S
+        [ ] Aldi
 
 [ ] Parallel process to retrieve product prices from each provider
 
@@ -73,6 +82,44 @@ TODO
 
 [ ] Ability to create a shopping cart (in the format) + select a stores + best price across selected stores
 
+[ ] Add Petrol & Diesel prices for comparison for available Supermarkets
+ 
+Phase 2
+=======
+
+[ ] Move excel data to a DB
+
+[ ] Update code to update and read from DB
+
+[ ] Create a ReactJS/NextJS/Flutter Web App, where a user would be able to select their product of choice and we should the cost across stores
+
+[ ] Deploy app to a web-portal
+
+[ ] Customer have their own profiles on the portal
+
+[ ] Customer can create their own shopping list
+
+[ ] Add Electric charger prices, source of prices?
+
+
+Phase 3
+=======
+
+[ ] Customer can send their shopping list to their favourite TODO mobile app?
+
+[ ] Ability for customer to get notification when product price goes up / down
+
+[ ] Ability for customer to get notification of each week with the best priced store?
+
+[ ] Ability for customer to add a favourite list to their profile
+
+[ ] Customer upload bill to the system; OCR Scan the bill and suggest if there could have been a discount
+
+[ ] Find coupons from Quidco
+
+[ ] Find coupons from TopCashBack
+
+[ ] If customer has coupons from Store, can we use it online?
 
 Credits
 -------
