@@ -28,7 +28,7 @@ Compare high-street stores product price
 Features
 --------
 
-* Basic feature to make sure screen scraping is working too retrieve product cost
+* Basic feature to make sure screen scraping works to retrieve product cost
 
 
 
@@ -39,7 +39,7 @@ TODO
 
 [ ] TDD approach to the solution
 
-[ ] Moduler solution
+[ ] Modular solution
 
 [ ] Update the Excel sheet(s) with required items
 
@@ -51,13 +51,21 @@ TODO
 
 [ ] Get prices for each store working
         [X] Sainsburys
+
         [X] Tesco
+
         [ ] Co-op
+
         [ ] Ocado
+
         [ ] Morissons
+
         [ ] Lidl
+
         [ ] Asda
+
         [ ] M&S
+
         [ ] Aldi
 
 [ ] Parallel process to retrieve product prices from each provider
@@ -70,19 +78,19 @@ TODO
 
 [ ] Identify if the product is in stock and update excel cost accordingly
 
-[ ] Identify offers if available and add relevant items update cost accordingly
+[ ] Identify offers if available and add relevant items to update cost accordingly
 
 [ ] Create a shopping list sheet and identify the cost
 
-[ ] For the created shopping cart compare across the listed providers and find the cheapest and show the store name
+[ ] For the created shopping cart, compare across the listed providers and find the cheapest and show the store name
 
 [ ] Create a master sheet of stores for selection and a master sheet for products
 
-[ ] Ability to create a shopping cart (in the format) + select a store
+[ ] Ability to create a shopping cart (in the format) + selecting a store
 
-[ ] Ability to create a shopping cart (in the format) + select a stores + best price across selected stores
+[ ] Ability to create a shopping cart (in the format) + select stores + best price across selected stores
 
-[ ] Add Petrol & Diesel prices for comparison for available Supermarkets
+[ ] Add Petrol & Diesel prices for comparison for Supermarkets
  
 Phase 2
 =======
@@ -91,15 +99,15 @@ Phase 2
 
 [ ] Update code to update and read from DB
 
-[ ] Create a ReactJS/NextJS/Flutter Web App, where a user would be able to select their product of choice and we should the cost across stores
+[ ] Create a ReactJS/NextJS/Flutter Web App, where a user could select their product(s) of choice and generate a shopping list
 
 [ ] Deploy app to a web-portal
 
-[ ] Customer have their own profiles on the portal
+[ ] Customer has their own profiles on the portal
 
 [ ] Customer can create their own shopping list
 
-[ ] Add Electric charger prices, source of prices?
+[ ] Add EV charger prices, source of prices?
 
 
 Phase 3
@@ -119,7 +127,7 @@ Phase 3
 
 [ ] Find coupons from TopCashBack
 
-[ ] If customer has coupons from Store, can we use it online?
+[ ] If a customer has coupons from Store, can we use it online?
 
 Credits
 -------
