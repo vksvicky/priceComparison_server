@@ -52,7 +52,7 @@ TODO
 [ ] Get prices for each store working
         [X] Sainsburys
 
-        [X] Tesco
+        [X] Tesco - Added process percentage
 
         [ ] Co-op
 
@@ -62,7 +62,7 @@ TODO
 
         [ ] Lidl
 
-        [ ] Asda
+        [X] Asda - Added process percentage
 
         [ ] M&S
 
