@@ -29,6 +29,10 @@ requests.packages.urllib3.disable_warnings()
 
 # print(sheetNamesList)  # see all sheet names
 
+# If productURL does not exist, just move the next item in the loop
+				if (isNaN(productURL)):
+			   		continue
+
 def update_excel(filename, sheetname, dataframe):
     with _pandas.ExcelWriter(filename, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer: 
         workBook = writer.book
@@ -50,6 +54,10 @@ try:
 			for eachItem in tqdm(range(0, numberOfRows, 1), "Reteriving data..."):
 				productURL = priceWatchDataFrame.loc[eachItem, 'URL']
 				# print("productURL = ", productURL)
+
+				# If productURL does not exist, just move the next item in the loop
+				if (isNaN(productURL)):
+			   		continue
 
 				_session.headers = _headers
 				response = _session.get(productURL, headers=_headers, verify=False).text

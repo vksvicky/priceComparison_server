@@ -2,7 +2,6 @@ from pandas import DataFrame, read_csv
 from requests.exceptions import HTTPError
 from collections import OrderedDict
 from bs4 import BeautifulSoup
-# from requests import Session
 from tqdm import tqdm
 
 import pandas as _pandas
@@ -19,6 +18,9 @@ requests.packages.urllib3.disable_warnings()
 
 # print(sheetNamesList)  # see all sheet names
 
+def isNaN(string):
+    return string != string
+
 def update_excel(filename, sheetname, dataframe):
     with _pandas.ExcelWriter(filename, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer: 
         workBook = writer.book
@@ -32,7 +34,6 @@ try:
 		# print(priceWatchDataFrame.head(5))
 		
 		numberOfRows = priceWatchDataFrame.shape[0]
-		# numberOfRows = 1
 		# print("numberOfRows = ", numberOfRows);
 
 		# # Reading the URL for each row in the sheet
@@ -40,6 +41,10 @@ try:
 			for eachItem in tqdm(range(0, numberOfRows, 1), "Reteriving data..."):
 				productURL = priceWatchDataFrame.loc[eachItem, 'URL']
 				# print("productURL = ", productURL)
+
+				# If productURL does not exist, just move the next item in the loop
+				if (isNaN(productURL)):
+			   		continue
 
 				# Get product Id from URL
 				productId = str(productURL).split("/")
@@ -80,40 +85,11 @@ try:
 				productPrice = productDetails['data']['tempo_cms_content']['zones'][0]['configs']['products']['items'][0]['price']['price_info']['price'].lstrip('£')
 				# print(productPrice)
 
-			   
-				# print(response.status_code)
-				# print(response.text)
-
-			   	# htmldoc = html.fromstring(response)
-				# soup = BeautifulSoup(response, 'html.parser')
-
-				# print("price = ", soup.find_all("span", class_="value"))
-				# print("price = ", soup.findAll("span", {"class": "value"}))
-
-				# # Identifiying the Div which contains the price
-				# productPriceDiv = soup.find("div", {"class": "price-control-wrapper"})
-
-				# # Using the idenfified div that contains the price, find the span with the price
-				# productPrice = productPriceDiv.find("span", {"class": "value"})
-				
-				# # Update the cell in the sheet with the price
-				# # print("price = ", productPrice.text)
 				priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
-
-				# for span in soup.find_all('form'):
-				# 	print(span.get('span'))
-
-			   	# productDetails = response.json()
-			   	# print("productDetails = ", productDetails);
-
-			   	# productPrice = productDetails['products'][0]['retail_price']['price']
-			   	# # print(productPrice)
-			   	# priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
 		except HTTPError as http_err:
 		    print(f'HTTP error occurred: {http_err}')
 		except Exception as err:
 		    print(f'Other error occurred: {err}')
-		# # priceWatchDataFrame.to_excel("./pricewatch.xlsx",index=False);
 
 		update_excel(fileName, eachSheet, priceWatchDataFrame)	
 except Exception as general_err:

@@ -1,4 +1,3 @@
-"""Main module."""
 from tqdm import tqdm
 from pandas import DataFrame, read_csv
 from requests.exceptions import HTTPError
@@ -10,7 +9,7 @@ import json
 fileName = 'pricewatch.xlsx'
 priceWatchXLS = _pandas.ExcelFile(fileName)
 # sheetNamesList = priceWatchXLS.sheet_names
-sheetNamesList = ['Sainsburys']
+sheetNamesList = ['Co-op']
 
 # print(sheetNamesList)  # see all sheet names
 
@@ -36,16 +35,19 @@ try:
 		try:
 			for eachItem in tqdm(range(0, numberOfRows, 1)):
 			   productURL = priceWatchDataFrame.loc[eachItem, 'URL']
-			   # print(productURL)
+			   # print(isNaN(productURL))
 
 			   # If productURL does not exist, just move the next item in the loop
-				if (isNaN(productURL)):
+			   if (isNaN(productURL)):
 			   		continue
 
 			   response = requests.get(productURL)
 			   productDetails = response.json()
-			   productPrice = productDetails['products'][0]['retail_price']['price']
+			   # print(productDetails)
+
+			   productPrice = productDetails['price']
 			   # print(productPrice)
+
 			   priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
 		except HTTPError as http_err:
 		    print(f'HTTP error occurred: {http_err}')
