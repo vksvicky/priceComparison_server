@@ -56,7 +56,7 @@ TODO
 
         [X] Co-op
 
-        [ ] Ocado
+        [X] Ocado
 
         [ ] Morissons
 
