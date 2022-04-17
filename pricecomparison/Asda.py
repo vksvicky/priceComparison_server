@@ -6,7 +6,10 @@ from tqdm import tqdm
 
 import pandas as _pandas
 import requests
+import logging
 import json
+
+logging.basicConfig(level=logging.DEBUG, filename='asda.log', filemode='a', format='%(name)s - %(levelname)s - %(message)s')
 
 BASE_URL = "https://groceries.asda.com/api/bff/graphql"
 fileName = 'pricewatch.xlsx'
@@ -87,10 +90,10 @@ try:
 
 				priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
 		except HTTPError as http_err:
-		    print(f'HTTP error occurred: {http_err}')
+		    logging.error("HTTTP Error: ", http_err)
 		except Exception as err:
-		    print(f'Other error occurred: {err}')
+		    logging.error("Other Error: ", err)
 
 		update_excel(fileName, eachSheet, priceWatchDataFrame)	
 except Exception as general_err:
-    print(f'Error occurred: {general_err}')
+    logging.error("Error occurred: ", general_err)

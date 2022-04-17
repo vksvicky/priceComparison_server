@@ -4,7 +4,10 @@ from requests.exceptions import HTTPError
 
 import pandas as _pandas
 import requests
+import logging
 import json
+
+logging.basicConfig(level=logging.DEBUG, filename='coop.log', filemode='a', format='%(name)s - %(levelname)s - %(message)s')
 
 fileName = 'pricewatch.xlsx'
 priceWatchXLS = _pandas.ExcelFile(fileName)
@@ -50,11 +53,11 @@ try:
 
 			   priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
 		except HTTPError as http_err:
-		    print(f'HTTP error occurred: {http_err}')
+		    logging.error("HTTTP Error: ", http_err)
 		except Exception as err:
-		    print(f'Other error occurred: {err}')
+		    logging.error("Other Error: ", err)
 		# priceWatchDataFrame.to_excel("./pricewatch.xlsx",index=False);
 
 		update_excel(fileName, eachSheet, priceWatchDataFrame)	
 except Exception as general_err:
-    print(f'Error occurred: {general_err}')
+    logging.error("Error occurred: ", general_err)

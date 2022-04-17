@@ -38,6 +38,7 @@ TODO
 [X] Update folder structure
 
 [ ] TDD approach to the solution
+        - If Prices has not have cents, then add £XXX.00
 
 [ ] Modular solution
 
@@ -58,7 +59,7 @@ TODO
 
         [X] Ocado
 
-        [ ] Morissons
+        [X] Morissons
 
         [ ] Lidl
 
