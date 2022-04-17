@@ -66,7 +66,7 @@ TODO
 
         [ ] M&S
 
-        [ ] Aldi
+        [X] Aldi
 
 [ ] Parallel process to retrieve product prices from each provider
 
