@@ -8,7 +8,7 @@ import requests
 import logging
 import json
 
-logging.basicConfig(level=logging.DEBUG, filename='ocado.log', filemode='a', format='%(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, filename='ocado_mands.log', filemode='a', format='%(name)s - %(levelname)s - %(message)s')
 
 fileName = 'pricewatch.xlsx'
 priceWatchXLS = _pandas.ExcelFile(fileName)

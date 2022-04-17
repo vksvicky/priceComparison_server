@@ -57,15 +57,15 @@ TODO
 
         [X] Co-op
 
-        [X] Ocado
+        [X] Ocado / M&S
 
         [X] Morissons
 
-        [ ] Lidl
+        [ ] Lidl - Missing an online store with product details
 
         [X] Asda
 
-        [ ] M&S
+        [ ] 
 
         [X] Aldi
 
