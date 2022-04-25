@@ -1,12 +1,10 @@
 from tqdm import tqdm
 from bs4 import BeautifulSoup
-from pandas import DataFrame, read_csv
 from requests.exceptions import HTTPError
 
 import pandas as _pandas
 import requests
 import logging
-import json
 
 logging.basicConfig(level=logging.DEBUG, filename='ocado_mands.log', filemode='a', format='%(name)s - %(levelname)s - %(message)s')
 
@@ -22,7 +20,7 @@ def isNaN(string):
 
 def update_excel(filename, sheetname, dataframe):
     with _pandas.ExcelWriter(filename, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer: 
-        workBook = writer.book
+        writer.book
         dataframe.to_excel(writer, sheet_name=sheetname, index=False)
         writer.save()
         # writer.close()

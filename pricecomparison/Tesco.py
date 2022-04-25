@@ -1,15 +1,12 @@
-from pandas import DataFrame, read_csv
 from requests.exceptions import HTTPError
 from collections import OrderedDict
 from bs4 import BeautifulSoup
 from requests import Session
-from lxml import html
 from tqdm import tqdm
 
 import pandas as _pandas
 import requests
 import logging
-import json
 
 logging.basicConfig(level=logging.DEBUG, filename='tesco.log', filemode='a', format='%(name)s - %(levelname)s - %(message)s')
 
@@ -33,13 +30,12 @@ requests.packages.urllib3.disable_warnings()
 
 # print(sheetNamesList)  # see all sheet names
 
-# If productURL does not exist, just move the next item in the loop
-				if (isNaN(productURL)):
-			   		continue
+def isNaN(string):
+	return string != string
 
 def update_excel(filename, sheetname, dataframe):
     with _pandas.ExcelWriter(filename, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer: 
-        workBook = writer.book
+        writer.book
         dataframe.to_excel(writer, sheet_name=sheetname, index=False)
         writer.save()
         # writer.close()

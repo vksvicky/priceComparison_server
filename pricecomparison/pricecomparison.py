@@ -1,12 +1,10 @@
 """Main module."""
 from tqdm import tqdm
-from pandas import DataFrame, read_csv
 from requests.exceptions import HTTPError
 
 import pandas as _pandas
 import requests
 import logging
-import json
 
 logging.basicConfig(level=logging.DEBUG, filename='sainsburys.log', filemode='a', format='%(name)s - %(levelname)s - %(message)s')
 
@@ -22,7 +20,7 @@ def isNaN(string):
 
 def update_excel(filename, sheetname, dataframe):
     with _pandas.ExcelWriter(filename, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer: 
-        workBook = writer.book
+        writer.book
         dataframe.to_excel(writer, sheet_name=sheetname, index=False)
         writer.save()
         # writer.close()
@@ -42,7 +40,7 @@ try:
 			   # print(productURL)
 
 			   # If productURL does not exist, just move the next item in the loop
-				if (isNaN(productURL)):
+			   if (isNaN(productURL)):
 			   		continue
 
 			   response = requests.get(productURL)
@@ -50,11 +48,12 @@ try:
 			   productPrice = productDetails['products'][0]['retail_price']['price']
 			   # print(productPrice)
 			   priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
-		except HTTPError as http_err:
+		except HTTPError as http_err:\
 			logging.error("HTTTP Error: ", http_err)
 		except Exception as err:
 			logging.error("Other Error: ", err)
+		# # priceWatchDataFrame.to_excel("./pricewatch.xlsx",index=False);
 
-		update_excel(fileName, eachSheet, priceWatchDataFrame)	
+		update_excel(fileName, eachSheet, priceWatchDataFrame)
 except Exception as general_err:
 	logging.error("Error occurred: ", general_err)

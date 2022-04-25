@@ -1,7 +1,4 @@
-from pandas import DataFrame, read_csv
 from requests.exceptions import HTTPError
-from collections import OrderedDict
-from bs4 import BeautifulSoup
 from tqdm import tqdm
 
 import pandas as _pandas
