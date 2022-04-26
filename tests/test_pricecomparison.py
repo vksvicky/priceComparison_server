@@ -6,49 +6,41 @@ import os
 
 # Test file does not exists
 STORE_NAME = "Sainsburys"
-fileName = ""
-realPath = ""
 
-# @pytest.fixture(autouse=True)
-# def setUp():
-#     fileName = "./pricewatch.xls"
-#     realPath = os.path.realpath(fileName)
-#     yield
-#     fileName = ""
-#     realPath = ""
+@pytest.fixture(autouse=True)
+def setUp():
+    _fileName: str = "pricewatch.xlsx"
 
-# class Tests(object):
-def test_fileDoesNotExist():
+    fileObject: dict[str : str] = {
+        "fileName": _fileName,
+        "realPath": os.path.realpath(_fileName),
+        "absolutePath": os.path.abspath(_fileName)
+    }
+    yield fileObject
+
+def test_fileDoesNotExist(setUp):
+    fileName = "./pricewatch.xls"
     fileDoesNotExist = os.path.exists(fileName)
     assert fileDoesNotExist == False
 
 #  Test if file exists
-def test_fileExists():
-    fileName = "./tests/pricewatch.xlsx"
-    realPath = os.path.realpath(fileName)
-    assert realPath
+def test_fileExists(setUp):
+    assert setUp["absolutePath"]
 
 # Test Count number of sheets
-def test_NumberOfSheetsInFile():
-    fileName = "./pricewatch.xlsx"
-    realPath = os.path.realpath(fileName)
-    # numberOfSheets = len(pd.read_excel(r"./tests/pricewatch.xls", sheet_name=None))
-    _excel = pd.ExcelFile(realPath)
+def test_NumberOfSheetsInFile(setUp):
+    _excel = pd.ExcelFile(setUp['absolutePath'])
     numberOfSheets = len(_excel.sheet_names)
     assert (numberOfSheets == 8)
 
 # Test to check if a sheet names Sainsburys exists
-def test_SheetNameHasSainsburys():
-    fileName = "./pricewatch.xlsx"
-    realPath = os.path.realpath(fileName)
-    _excel = pd.ExcelFile(realPath)
+def test_SheetNameHasSainsburys(setUp):
+    _excel = pd.ExcelFile(setUp["absolutePath"])
     assert ("%s" % STORE_NAME) in _excel.sheet_names
 
 # Test to validate we have the right amount of columns in the provided Excel sheet
-def test_NumberOfColumnsInExcelSheet():
-    fileName = "./pricewatch.xlsx"
-    realPath = os.path.realpath(fileName)
-    _excel = pd.ExcelFile(realPath)
+def test_NumberOfColumnsInExcelSheet(setUp):
+    _excel = pd.ExcelFile(setUp["absolutePath"])
     _excelSheet = _excel.parse("%s" % STORE_NAME)
     numberOfRowsAndColumns = _excelSheet.shape
     assert (numberOfRowsAndColumns[1] == 3)
@@ -58,4 +50,3 @@ def test_NumberOfColumnsInExcelSheet():
 # Test to throw exception if sheet does not exist
 
 # Test to throw exception if column does not exist
-
