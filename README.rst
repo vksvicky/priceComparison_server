@@ -65,8 +65,6 @@ TODO
 
         [X] Asda
 
-        [ ] 
-
         [X] Aldi
 
 [ ] Parallel process to retrieve product prices from each provider
@@ -99,6 +97,8 @@ Phase 2
 [ ] Move excel data to a DB
 
 [ ] Update code to update and read from DB
+
+[ ] Add historic data for each product in a Supermarkets
 
 [ ] Create a ReactJS/NextJS/Flutter Web App, where a user could select their product(s) of choice and generate a shopping list
 

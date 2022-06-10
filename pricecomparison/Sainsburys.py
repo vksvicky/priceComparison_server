@@ -1,5 +1,5 @@
+"""Main module."""
 from tqdm import tqdm
-from bs4 import BeautifulSoup
 from requests.exceptions import HTTPError
 
 import pandas as _pandas
@@ -8,14 +8,13 @@ import logging
 
 from pricecomparison.Utilities import isNaN
 
-logging.basicConfig(level=logging.DEBUG, filename='ocado_mands.log', filemode='a',
+logging.basicConfig(level=logging.DEBUG, filename='sainsburys.log', filemode='a',
                     format='%(name)s - %(levelname)s - %(message)s')
 
 fileName = 'pricewatch.xlsx'
 priceWatchXLS = _pandas.ExcelFile(fileName)
 # sheetNamesList = priceWatchXLS.sheet_names
-sheetNamesList = ['Ocado']
-
+sheetNamesList = ['Sainsburys']
 
 # print(sheetNamesList)  # see all sheet names
 
@@ -44,21 +43,16 @@ try:
                 if (isNaN(productURL)):
                     continue
 
-                productDetails = requests.get(productURL)
-                # print(productDetails.text)
-
-                soup = BeautifulSoup(productDetails.text, 'html.parser')
-
-                # Finding the price using the class name
-                productPrice = (soup.find(class_='bop-price__current').text).lstrip('£')
+                response = requests.get(productURL)
+                productDetails = response.json()
+                productPrice = productDetails['products'][0]['retail_price']['price']
                 # print(productPrice)
-
-                # Update the cell in the sheet with the price
                 priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
-        except HTTPError as http_err:
-            logging.error("HTTTP Error: ", http_err)
+        except HTTPError as http_err: \
+                logging.error("HTTTP Error: ", http_err)
         except Exception as err:
             logging.error("Other Error: ", err)
+        # # priceWatchDataFrame.to_excel("./pricewatch.xlsx",index=False);
 
         update_excel(fileName, eachSheet, priceWatchDataFrame)
 except Exception as general_err:
