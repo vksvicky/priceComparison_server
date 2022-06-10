@@ -15,25 +15,18 @@ setup_logging(logging.DEBUG, "aldi")
 
 BASE_URL = "https://groceries.aldi.co.uk/api/product/calculatePrices"
 priceWatchXLS = _pandas.ExcelFile(FILENAME)
-# sheetNamesList = priceWatchXLS.sheet_names
 sheetNamesList = ['Aldi']
-
-# print(sheetNamesList)  # see all sheet names
 
 try:
     for eachSheet in sheetNamesList:
         priceWatchDataFrame = _pandas.read_excel(FILENAME, sheet_name=eachSheet, engine="openpyxl")
-        # print(priceWatchDataFrame.head(5))
 
         numberOfRows = priceWatchDataFrame.shape[0]
-        # numberOfRows = 1
-        # print("numberOfRows = ", numberOfRows);
 
-        # # Reading the URL for each row in the sheet
+        # Reading the URL for each row in the sheet
         try:
             for eachItem in tqdm(range(0, numberOfRows, 1), "Retrieving data..."):
                 productURL = priceWatchDataFrame.loc[eachItem, 'URL']
-                # print("productURL = ", productURL)
 
                 # If productURL does not exist, just move the next item in the loop
                 if _pandas.isna(productURL):
@@ -41,7 +34,6 @@ try:
 
                 # Get product Id from URL
                 productId = str(productURL).split("/")
-                # print("productId = ", productId[5])
 
                 _headers = {
                     "Content-Type": "application/json",
@@ -60,23 +52,19 @@ try:
                 session = retry_session()
 
                 productDetails = session.post(BASE_URL, headers=_headers, data=data_binary, verify=False)
-                # print(productDetails.content)
 
                 if productDetails.status_code == 200:
                     productDetailsContent = json.loads(productDetails.content)
-
-                    # print(productDetailsContent)
                     productPrice = productDetailsContent['ProductPrices'][0]['ListPrice'].lstrip('£')
-                    # print(productPrice)
                     priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
                 else:
                     logging.error("HTTP Error: %s, %s", productDetails.status_code, productDetails.reason)
 
         except HTTPError as http_err:
-            logging.error("HTTTP Error: ", http_err)
+            logging.error("HTTP Error: %s", http_err)
         except Exception as err:
-            logging.error("Other Error: ", err)
+            logging.error("Other Error: %s", err)
 
         update_excel(FILENAME, eachSheet, priceWatchDataFrame)
 except Exception as general_err:
-    logging.error("Error occurred: ", general_err)
+    logging.error("Error occurred: %s", general_err)
