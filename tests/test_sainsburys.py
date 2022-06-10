@@ -5,10 +5,9 @@ import requests
 import pytest
 import os
 
-# Test file does not exists
-from requests import ConnectTimeout
+# Test file does not exists from requests import ConnectTimeout
 
-from pricecomparison.Utilities import retry_session
+from pricecomparison.utilities import retry_session
 
 STORE_NAME = "Sainsburys"
 

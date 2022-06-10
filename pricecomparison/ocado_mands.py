@@ -1,3 +1,4 @@
+"""Code to retrieve and update Ocado and 'Marks & Spencers' product prices"""
 import logging
 import pandas as _pandas
 
@@ -5,7 +6,7 @@ from tqdm import tqdm
 from bs4 import BeautifulSoup
 from requests.exceptions import HTTPError
 
-from pricecomparison.Utilities import FILENAME, update_excel, retry_session
+from pricecomparison.utilities import FILENAME, retry_session, update_excel
 
 logging.basicConfig(level=logging.DEBUG, filename='ocado_mands.log', filemode='a',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',

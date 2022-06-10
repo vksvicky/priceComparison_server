@@ -1,3 +1,4 @@
+"""Code to retrieve and update Morrisons product prices"""
 import logging
 import urllib3
 import pandas as _pandas
@@ -6,7 +7,7 @@ from requests.exceptions import HTTPError
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-from pricecomparison.Utilities import FILENAME, update_excel, retry_session
+from pricecomparison.utilities import FILENAME, update_excel, retry_session
 
 urllib3.disable_warnings()
 logging.basicConfig(level=logging.DEBUG, filename='morrisons.log', filemode='a',

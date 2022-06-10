@@ -1,19 +1,17 @@
+"""Code to retrieve and update Aldi product prices"""
 import json
 import logging
 
-import requests
 import urllib3
 import pandas as _pandas
 
 from requests.exceptions import HTTPError
 from tqdm import tqdm
 
-from pricecomparison.Utilities import FILENAME, update_excel, retry_session
+from pricecomparison.utilities import FILENAME, update_excel, retry_session, setup_logging
 
 urllib3.disable_warnings()
-logging.basicConfig(level=logging.DEBUG, filename='aldi.log', filemode='a',
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    datefmt='%d-%m-%Y %H:%M:%S')
+setup_logging(logging.DEBUG, "aldi")
 
 BASE_URL = "https://groceries.aldi.co.uk/api/product/calculatePrices"
 priceWatchXLS = _pandas.ExcelFile(FILENAME)
@@ -47,12 +45,9 @@ try:
 
                 _headers = {
                     "Content-Type": "application/json",
-                    "Accept": "application/json, text/javascript, */*; q=0.01",
-                    "Accept-Encoding": "gzip, deflate, br",
                     "Accept-Language": "en-GB",
                     "Host": "groceries.aldi.co.uk",
-                    "Origin": "https://groceries.aldi.co.uk",
-                    "User-Accept": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.5 Safari/605.1.15",
+                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.5 Safari/605.1.15",
                     "X-Requested-With": "XMLHttpRequest"
                 }
 
@@ -63,10 +58,8 @@ try:
                 })
 
                 session = retry_session()
-                for_cookies = session.get("https://groceries.aldi.co.uk")
-                _cookies = for_cookies.cookies
 
-                productDetails = session.post(BASE_URL, headers=_headers, cookies=_cookies, data=data_binary, verify=False)
+                productDetails = session.post(BASE_URL, headers=_headers, data=data_binary, verify=False)
                 # print(productDetails.content)
 
                 if productDetails.status_code == 200:

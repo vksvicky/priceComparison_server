@@ -1,11 +1,11 @@
-"""Main module."""
+"""Code to retrieve and update Sainsburys product prices"""
 import logging
 import pandas as _pandas
 
 from tqdm import tqdm
 from requests.exceptions import HTTPError
 
-from pricecomparison.Utilities import FILENAME, update_excel, retry_session
+from pricecomparison.utilities import FILENAME, update_excel, retry_session
 
 logging.basicConfig(level=logging.DEBUG, filename='sainsburys.log', filemode='a',
                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
