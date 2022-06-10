@@ -1,25 +1,24 @@
-from requests.exceptions import HTTPError
+import logging
+
 from collections import OrderedDict
+import urllib3
+import pandas as _pandas
+
+from requests.exceptions import HTTPError
 from bs4 import BeautifulSoup
-from requests import Session
 from tqdm import tqdm
 
-import pandas as _pandas
-import logging
-import urllib3
-
-from pricecomparison.Utilities import isNaN
+from pricecomparison.Utilities import FILENAME, update_excel, retry_session
 
 urllib3.disable_warnings()
 logging.basicConfig(level=logging.DEBUG, filename='tesco.log', filemode='a',
-                    format='%(name)s - %(levelname)s - %(message)s')
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    datefmt='%d-%m-%Y %H:%M:%S')
 
-fileName = 'pricewatch.xlsx'
-priceWatchXLS = _pandas.ExcelFile(fileName)
+priceWatchXLS = _pandas.ExcelFile(FILENAME)
 # sheetNamesList = priceWatchXLS.sheet_names
 sheetNamesList = ['Tesco']
 
-_session = Session()
 _headers = OrderedDict({
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
     'Host': 'www.tesco.com',
@@ -31,16 +30,9 @@ _headers = OrderedDict({
 
 # print(sheetNamesList)  # see all sheet names
 
-def update_excel(filename, sheetname, dataframe):
-    with _pandas.ExcelWriter(filename, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
-        writer.book
-        dataframe.to_excel(writer, sheet_name=sheetname, index=False)
-        writer.save()
-        # writer.close()
-
 try:
     for eachSheet in sheetNamesList:
-        priceWatchDataFrame = _pandas.read_excel(fileName, sheet_name=eachSheet, engine="openpyxl")
+        priceWatchDataFrame = _pandas.read_excel(FILENAME, sheet_name=eachSheet, engine="openpyxl")
         # print(priceWatchDataFrame.head(5))
 
         numberOfRows = priceWatchDataFrame.shape[0]
@@ -54,11 +46,11 @@ try:
                 # print("productURL = ", productURL)
 
                 # If productURL does not exist, just move the next item in the loop
-                if (isNaN(productURL)):
+                if _pandas.isna(productURL):
                     continue
 
-                _session.headers = _headers
-                response = _session.get(productURL, headers=_headers, verify=False).text
+                session = retry_session()
+                response = session.get(productURL, headers=_headers, verify=False).text
                 # print(response)
 
                 # response = requests.get(productURL)
@@ -95,6 +87,6 @@ try:
             logging.error("Other Error: ", err)
         # # priceWatchDataFrame.to_excel("./pricewatch.xlsx",index=False);
 
-        update_excel(fileName, eachSheet, priceWatchDataFrame)
+        update_excel(FILENAME, eachSheet, priceWatchDataFrame)
 except Exception as general_err:
     logging.error("Error occurred: ", general_err)

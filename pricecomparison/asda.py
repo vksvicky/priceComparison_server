@@ -1,36 +1,28 @@
+import json
+import logging
+import urllib3
+import pandas as _pandas
+
 from requests.exceptions import HTTPError
 from tqdm import tqdm
 
-import pandas as _pandas
-import requests
-import logging
-import json
+from pricecomparison.Utilities import FILENAME, update_excel, retry_session
 
-from pricecomparison.Utilities import isNaN
-
+urllib3.disable_warnings()
 logging.basicConfig(level=logging.DEBUG, filename='asda.log', filemode='a',
-                    format='%(name)s - %(levelname)s - %(message)s')
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    datefmt='%d-%m-%Y %H:%M:%S')
 
 BASE_URL = "https://groceries.asda.com/api/bff/graphql"
-fileName = 'pricewatch.xlsx'
-priceWatchXLS = _pandas.ExcelFile(fileName)
+priceWatchXLS = _pandas.ExcelFile(FILENAME)
 # sheetNamesList = priceWatchXLS.sheet_names
 sheetNamesList = ['Asda']
 
-
 # print(sheetNamesList)  # see all sheet names
-
-def update_excel(filename, sheetname, dataframe):
-    with _pandas.ExcelWriter(filename, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
-        workBook = writer.book
-        dataframe.to_excel(writer, sheet_name=sheetname, index=False)
-        writer.save()
-        # writer.close()
-
 
 try:
     for eachSheet in sheetNamesList:
-        priceWatchDataFrame = _pandas.read_excel(fileName, sheet_name=eachSheet, engine="openpyxl")
+        priceWatchDataFrame = _pandas.read_excel(FILENAME, sheet_name=eachSheet, engine="openpyxl")
         # print(priceWatchDataFrame.head(5))
 
         numberOfRows = priceWatchDataFrame.shape[0]
@@ -43,7 +35,7 @@ try:
                 # print("productURL = ", productURL)
 
                 # If productURL does not exist, just move the next item in the loop
-                if (isNaN(productURL)):
+                if _pandas.isna(productURL):
                     continue
 
                 # Get product Id from URL
@@ -78,12 +70,12 @@ try:
                 }
 
                 # _session.headers = _headers
-                productDetails = requests.post(BASE_URL, headers=_headers, data=data_binary, verify=False).json()
+                session = retry_session()
+                productDetails = session.post(BASE_URL, headers=_headers, data=data_binary, verify=False).json()
                 # print(productDetails)
 
                 # productDetails = response.json()
-                productPrice = \
-                productDetails['data']['tempo_cms_content']['zones'][0]['configs']['products']['items'][0]['price'][
+                productPrice = productDetails['data']['tempo_cms_content']['zones'][0]['configs']['products']['items'][0]['price'][
                     'price_info']['price'].lstrip('£')
                 # print(productPrice)
 
@@ -93,6 +85,6 @@ try:
         except Exception as err:
             logging.error("Other Error: ", err)
 
-        update_excel(fileName, eachSheet, priceWatchDataFrame)
+        update_excel(FILENAME, eachSheet, priceWatchDataFrame)
 except Exception as general_err:
     logging.error("Error occurred: ", general_err)

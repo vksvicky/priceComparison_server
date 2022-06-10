@@ -27,7 +27,7 @@ setup(
     author_email='vksvicky@gmail.com',
     python_requires='>=3.6',
     classifiers=[
-        'Development Status :: 2 - Pre-Alpha',
+        'Development Status :: 1 - Pre-Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
         'Natural Language :: English',
@@ -47,6 +47,6 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/vksvicky/pricecomparison',
-    version='0.2.0',
+    version='0.2.4',
     zip_safe=False,
 )

@@ -1,37 +1,30 @@
+import json
+import logging
+
+import requests
+import urllib3
+import pandas as _pandas
+
 from requests.exceptions import HTTPError
-from urllib.request import Request, urlopen
 from tqdm import tqdm
 
-import pandas as _pandas
-import requests
-import logging
-import json
-import urllib3
-
-from pricecomparison.Utilities import isNaN, retry_session
+from pricecomparison.Utilities import FILENAME, update_excel, retry_session
 
 urllib3.disable_warnings()
 logging.basicConfig(level=logging.DEBUG, filename='aldi.log', filemode='a',
-                    format='%(name)s - %(levelname)s - %(message)s')
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    datefmt='%d-%m-%Y %H:%M:%S')
 
 BASE_URL = "https://groceries.aldi.co.uk/api/product/calculatePrices"
-fileName = 'pricewatch.xlsx'
-priceWatchXLS = _pandas.ExcelFile(fileName)
+priceWatchXLS = _pandas.ExcelFile(FILENAME)
 # sheetNamesList = priceWatchXLS.sheet_names
 sheetNamesList = ['Aldi']
 
 # print(sheetNamesList)  # see all sheet names
 
-def update_excel(filename, sheetname, dataframe):
-    with _pandas.ExcelWriter(filename, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer:
-        writer.book
-        dataframe.to_excel(writer, sheet_name=sheetname, index=False)
-        writer.save()
-    # writer.close()
-
 try:
     for eachSheet in sheetNamesList:
-        priceWatchDataFrame = _pandas.read_excel(fileName, sheet_name=eachSheet, engine="openpyxl")
+        priceWatchDataFrame = _pandas.read_excel(FILENAME, sheet_name=eachSheet, engine="openpyxl")
         # print(priceWatchDataFrame.head(5))
 
         numberOfRows = priceWatchDataFrame.shape[0]
@@ -45,7 +38,7 @@ try:
                 # print("productURL = ", productURL)
 
                 # If productURL does not exist, just move the next item in the loop
-                if (isNaN(productURL)):
+                if _pandas.isna(productURL):
                     continue
 
                 # Get product Id from URL
@@ -59,7 +52,7 @@ try:
                     "Accept-Language": "en-GB",
                     "Host": "groceries.aldi.co.uk",
                     "Origin": "https://groceries.aldi.co.uk",
-                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36",
+                    "User-Accept": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.5 Safari/605.1.15",
                     "X-Requested-With": "XMLHttpRequest"
                 }
 
@@ -69,20 +62,20 @@ try:
                     ]
                 })
 
-                # _session.headers = _headers
                 session = retry_session()
                 for_cookies = session.get("https://groceries.aldi.co.uk")
-                cookies = for_cookies.cookies
+                _cookies = for_cookies.cookies
 
-                productDetails = session.post(BASE_URL, headers=_headers, cookies=cookies, data=data_binary, verify=False)
+                productDetails = session.post(BASE_URL, headers=_headers, cookies=_cookies, data=data_binary, verify=False)
                 # print(productDetails.content)
 
-                if (productDetails.status_code == 200):
+                if productDetails.status_code == 200:
                     try:
                         productDetailsContent = json.loads(productDetails.content)
                     except:
                         productDetailsContent = ""
-                    if (productDetailsContent != ''):
+
+                    if productDetailsContent != '':
                         # print(productDetailsContent)
                         productPrice = productDetailsContent['ProductPrices'][0]['ListPrice'].lstrip('£')
                         # print(productPrice)
@@ -95,6 +88,6 @@ try:
         except Exception as err:
             logging.error("Other Error: ", err)
 
-        update_excel(fileName, eachSheet, priceWatchDataFrame)
+        update_excel(FILENAME, eachSheet, priceWatchDataFrame)
 except Exception as general_err:
     logging.error("Error occurred: ", general_err)

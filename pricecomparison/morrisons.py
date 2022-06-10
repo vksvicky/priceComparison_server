@@ -1,36 +1,29 @@
+import logging
+import urllib3
+import pandas as _pandas
+
 from requests.exceptions import HTTPError
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-import pandas as _pandas
-import requests
-import logging
-import urllib3
-
-from pricecomparison.Utilities import isNaN, retry_session
+from pricecomparison.Utilities import FILENAME, update_excel, retry_session
 
 urllib3.disable_warnings()
-logging.basicConfig(level=logging.DEBUG, filename='morrisons.log', filemode='a', format='%(name)s - %(levelname)s - %(message)s')
+logging.basicConfig(level=logging.DEBUG, filename='morrisons.log', filemode='a',
+                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                    datefmt='%d-%m-%Y %H:%M:%S')
 
-fileName = 'pricewatch.xlsx'
-priceWatchXLS = _pandas.ExcelFile(fileName)
+priceWatchXLS = _pandas.ExcelFile(FILENAME)
 # sheetNamesList = priceWatchXLS.sheet_names
 sheetNamesList = ['Morrisons']
 
 # print(sheetNamesList)  # see all sheet names
 
-def update_excel(filename, sheetname, dataframe):
-    with _pandas.ExcelWriter(filename, engine='openpyxl', mode='a', if_sheet_exists='replace') as writer: 
-        writer.book
-        dataframe.to_excel(writer, sheet_name=sheetname, index=False)
-        writer.save()
-        # writer.close()
-
 try:
     for eachSheet in sheetNamesList:
-        priceWatchDataFrame = _pandas.read_excel(fileName, sheet_name=eachSheet, engine="openpyxl")
+        priceWatchDataFrame = _pandas.read_excel(FILENAME, sheet_name=eachSheet, engine="openpyxl")
         # print(priceWatchDataFrame.head(5))
-        
+
         numberOfRows = priceWatchDataFrame.shape[0]
         # print("numberOfRows = ", numberOfRows);
 
@@ -41,7 +34,7 @@ try:
                 # print("productURL = ", productURL)
 
                 # If productURL does not exist, just move the next item in the loop
-                if (isNaN(productURL)):
+                if _pandas.isna(productURL):
                     continue
 
                 _headers={
@@ -56,7 +49,7 @@ try:
                 for_cookies = session.get("https://groceries.morrisons.com")
                 cookies = for_cookies.cookies
 
-                productDetails = requests.get(productURL, headers=_headers, cookies=cookies, verify=False)
+                productDetails = session.get(productURL, headers=_headers, cookies=cookies, verify=False)
                 # print(productDetails.content)
 
                 soup = BeautifulSoup(productDetails.text, 'html.parser')
@@ -66,8 +59,9 @@ try:
                     priceElement = soup.find(class_='bop-price__current').text
                 except:
                     priceElement = ""
-                if (priceElement != ''):
-                    productPrice = (soup.find(class_='bop-price__current').text).lstrip('£')
+
+                if priceElement != '':
+                    productPrice = priceElement.lstrip('£')
                     # print(productPrice)
                     priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
         except HTTPError as http_err:
@@ -75,6 +69,6 @@ try:
         except Exception as err:
             logging.error("Other Error: ", err)
 
-        update_excel(fileName, eachSheet, priceWatchDataFrame)  
+        update_excel(FILENAME, eachSheet, priceWatchDataFrame)
 except Exception as general_err:
     logging.error("Error occurred: ", general_err)
