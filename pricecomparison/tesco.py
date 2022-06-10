@@ -41,7 +41,7 @@ try:
 
         # # Reading the URL for each row in the sheet
         try:
-            for eachItem in tqdm(range(0, numberOfRows, 1), "Reteriving data..."):
+            for eachItem in tqdm(range(0, numberOfRows, 1), "Retrieving data..."):
                 productURL = priceWatchDataFrame.loc[eachItem, 'URL']
                 # print("productURL = ", productURL)
 

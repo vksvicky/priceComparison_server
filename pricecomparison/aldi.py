@@ -33,7 +33,7 @@ try:
 
         # # Reading the URL for each row in the sheet
         try:
-            for eachItem in tqdm(range(0, numberOfRows, 1), "Reteriving data..."):
+            for eachItem in tqdm(range(0, numberOfRows, 1), "Retrieving data..."):
                 productURL = priceWatchDataFrame.loc[eachItem, 'URL']
                 # print("productURL = ", productURL)
 
@@ -70,16 +70,12 @@ try:
                 # print(productDetails.content)
 
                 if productDetails.status_code == 200:
-                    try:
-                        productDetailsContent = json.loads(productDetails.content)
-                    except:
-                        productDetailsContent = ""
+                    productDetailsContent = json.loads(productDetails.content)
 
-                    if productDetailsContent != '':
-                        # print(productDetailsContent)
-                        productPrice = productDetailsContent['ProductPrices'][0]['ListPrice'].lstrip('£')
-                        # print(productPrice)
-                        priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
+                    # print(productDetailsContent)
+                    productPrice = productDetailsContent['ProductPrices'][0]['ListPrice'].lstrip('£')
+                    # print(productPrice)
+                    priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
                 else:
                     logging.error("HTTP Error: %s, %s", productDetails.status_code, productDetails.reason)
 

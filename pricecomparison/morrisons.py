@@ -29,7 +29,7 @@ try:
 
         # # Reading the URL for each row in the sheet
         try:
-            for eachItem in tqdm(range(0, numberOfRows, 1), "Reteriving data..."):
+            for eachItem in tqdm(range(0, numberOfRows, 1), "Retrieving data..."):
                 productURL = priceWatchDataFrame.loc[eachItem, 'URL']
                 # print("productURL = ", productURL)
 
@@ -52,15 +52,13 @@ try:
                 productDetails = session.get(productURL, headers=_headers, cookies=cookies, verify=False)
                 # print(productDetails.content)
 
-                soup = BeautifulSoup(productDetails.text, 'html.parser')
 
-                # Finding the price using the class name
-                try:
+                if productDetails.status_code == 200:
+                    soup = BeautifulSoup(productDetails.text, 'html.parser')
+
+                    # Finding the price using the class name
                     priceElement = soup.find(class_='bop-price__current').text
-                except:
-                    priceElement = ""
 
-                if priceElement != '':
                     productPrice = priceElement.lstrip('£')
                     # print(productPrice)
                     priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice

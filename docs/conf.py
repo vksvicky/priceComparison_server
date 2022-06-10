@@ -126,9 +126,10 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass
 # [howto, manual, or own class]).
+documentation = 'priceComparison Documentation'
 latex_documents = [
     (master_doc, 'pricecomparison.tex',
-     'priceComparison Documentation',
+     ('%s' % documentation),
      'Vivek Krishnan', 'manual'),
 ]
 
@@ -139,7 +140,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     (master_doc, 'pricecomparison',
-     'priceComparison Documentation',
+     documentation,
      [author], 1)
 ]
 
@@ -151,7 +152,7 @@ man_pages = [
 #  dir menu entry, description, category)
 texinfo_documents = [
     (master_doc, 'pricecomparison',
-     'priceComparison Documentation',
+     documentation,
      author,
      'pricecomparison',
      'One line description of project.',
