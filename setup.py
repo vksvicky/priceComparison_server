@@ -12,11 +12,6 @@ with open('HISTORY.rst') as history_file:
 
 requirements = [ ]
 
-# extensions = [
-#     'extname',
-#     'sphinx.ext.todo',
-# ]
-
 # # Display todos by setting to True
 # todo_include_todos = True
 

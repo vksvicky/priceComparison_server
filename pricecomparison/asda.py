@@ -7,16 +7,14 @@ import pandas as _pandas
 from requests.exceptions import HTTPError
 from tqdm import tqdm
 
-from pricecomparison.utilities import FILENAME, update_excel, retry_session
+from pricecomparison.utilities import FILENAME, update_excel, retry_session, SuperMarkets, setup_logging
 
 urllib3.disable_warnings()
-logging.basicConfig(level=logging.DEBUG, filename='asda.log', filemode='a',
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    datefmt='%d-%m-%Y %H:%M:%S')
+setup_logging(logging.DEBUG, "%s" % SuperMarkets.Asda.lower())
 
 BASE_URL = "https://groceries.asda.com/api/bff/graphql"
 priceWatchXLS = _pandas.ExcelFile(FILENAME)
-sheetNamesList = ['Asda']
+sheetNamesList = [SuperMarkets.Asda]
 
 try:
     for eachSheet in sheetNamesList:

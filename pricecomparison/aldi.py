@@ -8,14 +8,14 @@ import pandas as _pandas
 from requests.exceptions import HTTPError
 from tqdm import tqdm
 
-from pricecomparison.utilities import FILENAME, update_excel, retry_session, setup_logging
+from pricecomparison.utilities import FILENAME, update_excel, retry_session, setup_logging, SuperMarkets
 
 urllib3.disable_warnings()
-setup_logging(logging.DEBUG, "aldi")
+setup_logging(logging.DEBUG, "%s" % SuperMarkets.Aldi.lower())
 
 BASE_URL = "https://groceries.aldi.co.uk/api/product/calculatePrices"
 priceWatchXLS = _pandas.ExcelFile(FILENAME)
-sheetNamesList = ['Aldi']
+sheetNamesList = [SuperMarkets.Aldi]
 
 try:
     for eachSheet in sheetNamesList:

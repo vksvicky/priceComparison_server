@@ -4,6 +4,7 @@ import sys
 import logging
 import os.path
 import http.client
+from enum import Enum
 from logging.handlers import TimedRotatingFileHandler
 import pandas as _pandas
 
@@ -12,6 +13,16 @@ from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
 FILENAME = 'pricewatch.xlsx'
+# SUPER_MARKETS = Enum(('Aldi', 'Asda', 'Coop', 'Morrisons', 'Ocado', 'Sainsburys', 'Tesco'))
+
+class SuperMarkets(str, Enum):
+    Aldi = 'Aldi'
+    Asda = 'Asda'
+    Coop = 'Coop'
+    Morrisons = 'Morrisons'
+    Ocado = 'Ocado'
+    Sainsburys = 'Sainsburys'
+    Tesco = 'Tesco'
 
 def update_excel(filename, sheetname, dataframe):
     "Function to update the specific sheet in the excel_file"
@@ -44,31 +55,31 @@ def retry_session(
 
     return session
 
-def setup_logging(loglevel, logFileName, logPath='.'):
+def setup_logging(log_level, log_filename, log_path='.'):
     "Function to enable logging"
     # the file handler receives all messages from level DEBUG on up, regardless
-    fileHandler = TimedRotatingFileHandler(
-        os.path.join(logPath, logFileName + ".log"),
+    file_handler = TimedRotatingFileHandler(
+        os.path.join(log_path, log_filename + ".log"),
         when="midnight"
     )
-    fileHandler.setLevel(logging.DEBUG)
-    handlers = [fileHandler]
+    file_handler.setLevel(logging.DEBUG)
+    handlers = [file_handler]
 
-    if loglevel is not None:
+    if log_level is not None:
         # if a log level is configured, use that for logging to the console
         stream_handler = logging.StreamHandler(sys.stdout)
-        stream_handler.setLevel(loglevel)
+        stream_handler.setLevel(log_level)
         handlers.append(stream_handler)
 
-    if loglevel == logging.DEBUG:
+    if log_level == logging.DEBUG:
         # when logging at debug level, make http.client extra chatty too
         # http.client *uses `print()` calls*, not logging.
         http.client.HTTPConnection.debuglevel = 1
 
     # finally, configure the root logger with our choice of handlers
     # the logging level of the root set to DEBUG (defaults to WARNING otherwise).
-    logFormat = "%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s"
+    log_format = "%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s"
     logging.basicConfig(
-        format=logFormat, datefmt="%d-%m-%Y %H:%M:%S",
+        format=log_format, datefmt="%d-%m-%Y %H:%M:%S",
         handlers=handlers, level=logging.DEBUG
     )

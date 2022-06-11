@@ -9,15 +9,13 @@ from requests.exceptions import HTTPError
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-from pricecomparison.utilities import FILENAME, update_excel, retry_session
+from pricecomparison.utilities import FILENAME, update_excel, retry_session, setup_logging, SuperMarkets
 
 urllib3.disable_warnings()
-logging.basicConfig(level=logging.DEBUG, filename='tesco.log', filemode='a',
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    datefmt='%d-%m-%Y %H:%M:%S')
+setup_logging(logging.DEBUG, "%s" % SuperMarkets.Tesco.lower())
 
 priceWatchXLS = _pandas.ExcelFile(FILENAME)
-sheetNamesList = ['Tesco']
+sheetNamesList = [SuperMarkets.Tesco]
 
 _headers = OrderedDict({
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',

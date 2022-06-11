@@ -7,15 +7,13 @@ from requests.exceptions import HTTPError
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-from pricecomparison.utilities import FILENAME, update_excel, retry_session
+from pricecomparison.utilities import FILENAME, update_excel, retry_session, setup_logging, SuperMarkets
 
 urllib3.disable_warnings()
-logging.basicConfig(level=logging.DEBUG, filename='morrisons.log', filemode='a',
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    datefmt='%d-%m-%Y %H:%M:%S')
+setup_logging(logging.DEBUG, "%s" % SuperMarkets.Morrisons.lower())
 
 priceWatchXLS = _pandas.ExcelFile(FILENAME)
-sheetNamesList = ['Morrisons']
+sheetNamesList = [SuperMarkets.Morrisons]
 
 try:
     for eachSheet in sheetNamesList:
@@ -39,7 +37,6 @@ try:
                     "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36",
                 }
 
-                # _session.headers = _headers
                 session = retry_session()
                 for_cookies = session.get("https://groceries.morrisons.com")
                 cookies = for_cookies.cookies

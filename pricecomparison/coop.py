@@ -5,14 +5,12 @@ import pandas as _pandas
 from tqdm import tqdm
 from requests.exceptions import HTTPError
 
-from pricecomparison.utilities import FILENAME, update_excel, retry_session
+from pricecomparison.utilities import FILENAME, update_excel, retry_session, setup_logging, SuperMarkets
 
-logging.basicConfig(level=logging.DEBUG, filename='coop.log', filemode='a',
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    datefmt='%d-%m-%Y %H:%M:%S')
+setup_logging(logging.DEBUG, "%s" % SuperMarkets.Coop.lower())
 
 priceWatchXLS = _pandas.ExcelFile(FILENAME)
-sheetNamesList = ['Co-op']
+sheetNamesList = [SuperMarkets.Coop]
 
 try:
     for eachSheet in sheetNamesList:

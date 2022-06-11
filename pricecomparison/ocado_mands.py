@@ -6,14 +6,12 @@ from tqdm import tqdm
 from bs4 import BeautifulSoup
 from requests.exceptions import HTTPError
 
-from pricecomparison.utilities import FILENAME, retry_session, update_excel
+from pricecomparison.utilities import FILENAME, retry_session, update_excel, setup_logging, SuperMarkets
 
-logging.basicConfig(level=logging.DEBUG, filename='ocado_mands.log', filemode='a',
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-                    datefmt='%d-%m-%Y %H:%M:%S')
+setup_logging(logging.DEBUG, "%s" % SuperMarkets.Ocado.lower())
 
 priceWatchXLS = _pandas.ExcelFile(FILENAME)
-sheetNamesList = ['Ocado']
+sheetNamesList = [SuperMarkets.Ocado]
 
 try:
     for eachSheet in sheetNamesList:
