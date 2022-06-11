@@ -82,7 +82,8 @@ def setup_logging(log_level, log_filename, log_path='.'):
     # the logging level of the root set to DEBUG (defaults to WARNING otherwise).
     log_format = "%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s"
 
-    logging.basicConfig(
-        format=log_format, datefmt="%d-%m-%Y %H:%M:%S", # NOSONAR
-        handlers=handlers, level=logging.DEBUG # NOSONAR
+    #NOSONAR
+    logging.basicConfig( #NOSONAR
+        format=log_format, datefmt="%d-%m-%Y %H:%M:%S", #NOSONAR
+        handlers=handlers, level=logging.DEBUG #NOSONAR
     )
