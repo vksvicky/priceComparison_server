@@ -82,4 +82,4 @@ def setup_logging(log_level, log_filename, log_path='.'):
     logging.basicConfig(
         format=log_format, datefmt="%d-%m-%Y %H:%M:%S",
         handlers=handlers, level=logging.DEBUG
-    ) # NOSONAR
+    ) #NOSONAR
