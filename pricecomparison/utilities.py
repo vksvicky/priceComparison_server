@@ -13,7 +13,6 @@ from requests.adapters import HTTPAdapter
 from urllib3 import Retry
 
 FILENAME = 'pricewatch.xlsx'
-# SUPER_MARKETS = Enum(('Aldi', 'Asda', 'Coop', 'Morrisons', 'Ocado', 'Sainsburys', 'Tesco'))
 
 class SuperMarkets(str, Enum):
     Aldi = 'Aldi'
@@ -45,7 +44,7 @@ def retry_session(
                            connect=retries,
                            backoff_factor=backoff_factor,
                            status_forcelist=status_forcelist,
-                           method_whitelist=frozenset(['GET', 'POST', 'PUT', 'DELETE']))
+                           allowed_methods=frozenset(['GET', 'POST', 'PUT']))
 
     adapter = HTTPAdapter(max_retries=retry_strategy)
 
