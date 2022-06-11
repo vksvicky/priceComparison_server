@@ -50,7 +50,7 @@ def retry_session(
 
     session = Session()
     session.mount("https://", adapter)
-    session.mount("http://", adapter)
+    # Not sure if this is required? session.mount("http://", adapter)
 
     return session
 

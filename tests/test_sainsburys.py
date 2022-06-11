@@ -40,6 +40,7 @@ def test_file_exists(pytest_setup):
     assert pytest_setup["absolutePath"]
 
 # Test Count number of sheets
+@pytest.mark.skipif(doesAbsolutePathStartWith, reason="Cannot run in CI environment")
 def test_number_of_sheets_in_file(pytest_setup):
     excel_file = pd.ExcelFile(pytest_setup['absolutePath'])
     number_of_sheets = len(excel_file.sheet_names)
@@ -68,6 +69,7 @@ def test_validate_number_of_columns_in_excel_sheet(pytest_setup):
     assert (len(col_names) == 3)
 
 # Test to validate the column names in an Excel sheet
+@pytest.mark.skipif(doesAbsolutePathStartWith, reason="Cannot run in CI environment")
 def test_validate_column_names_in_an_excel_sheet(pytest_setup):
     excel_file = pd.ExcelFile(pytest_setup["absolutePath"])
     dataframe = excel_file.parse(STORE_NAME)
@@ -117,7 +119,7 @@ def test_retry_session_a_successful_url_and_success():
 def test_retry_session_a_non_existing_url_n_times_and_fails(caplog):
     session = retry_session()
     with pytest.raises(requests.exceptions.ConnectionError):
-        session.get("http://this-url-does-not-exist.throw_error")
+        session.get("https://this-url-does-not-exist.throw_error")
 
     assert "Retry(total=0, " in caplog.records[2].message
     assert "Retry(total=1, " in caplog.records[1].message
