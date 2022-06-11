@@ -14,6 +14,7 @@ from urllib3 import Retry
 
 FILENAME = 'pricewatch.xlsx'
 
+
 class SuperMarkets(str, Enum):
     Aldi = 'Aldi'
     Asda = 'Asda'
@@ -22,6 +23,7 @@ class SuperMarkets(str, Enum):
     Ocado = 'Ocado'
     Sainsburys = 'Sainsburys'
     Tesco = 'Tesco'
+
 
 def update_excel(filename, sheetname, dataframe):
     "Function to update the specific sheet in the excel_file"
@@ -54,6 +56,7 @@ def retry_session(
 
     return session
 
+
 def setup_logging(log_level, log_filename, log_path='.'):
     "Function to enable logging"
     # the file handler receives all messages from level DEBUG on up, regardless
@@ -80,6 +83,6 @@ def setup_logging(log_level, log_filename, log_path='.'):
     log_format = "%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s"
 
     logging.basicConfig(
-        format=log_format, datefmt="%d-%m-%Y %H:%M:%S",
-        handlers=handlers, level=logging.DEBUG
-    ) # Sensitive
+        format=log_format, datefmt="%d-%m-%Y %H:%M:%S", # NOSONAR
+        handlers=handlers, level=logging.DEBUG # NOSONAR
+    )
