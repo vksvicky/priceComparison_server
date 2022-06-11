@@ -4,6 +4,7 @@ import pandas as pd
 import requests
 import pytest
 import os
+import re
 
 from pathlib import Path
 
@@ -13,7 +14,7 @@ from pricecomparison.utilities import retry_session
 
 STORE_NAME = "Sainsburys"
 absolutePath = Path().absolute()
-doesAbsolutePathStartWith: bool = absolutePath.match("/home/runner/work/")
+doesAbsolutePathStartWith: bool = bool(re.findall("/home/runner/work/", str(absolutePath)))
 
 @pytest.fixture(autouse=True)
 def pytest_setup():
@@ -31,7 +32,6 @@ def test_file_does_not_exist(pytest_setup):
     file_name = "./pricewatch.xls"
     file_does_not_exist = os.path.exists(file_name)
 
-    print("sasasa =", Path().absolute());
     assert file_does_not_exist == False
 
 #  Test if file exists
