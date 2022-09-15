@@ -27,8 +27,15 @@ try:
                 if _pandas.isna(productURL):
                     continue
 
+                _headers={
+                    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "Accept-Language": "en-GB,en;q=0.9",
+                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.6.1 Safari/605.1.15",
+                }
+
                 session = retry_session()
-                response = session.get(productURL)
+                response = session.get(productURL, headers=_headers)
                 productDetails = response.json()
 
                 productPrice = productDetails['price']

@@ -49,11 +49,18 @@ try:
                 # Identifying the Div which contains the price
                 productPriceDiv = soup.find("div", {"class": "price-control-wrapper"})
 
-                # Using the identified div that contains the price, find the span with the price
-                productPrice = productPriceDiv.find("span", {"class": "value"})
 
-                # Update the cell in the sheet with the price
-                priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice.text
+                if productPriceDiv is not None:
+                    # Using the identified div that contains the price, find the span with the price
+                    productPrice = productPriceDiv.find("span", {"class": "value"})
+
+                    # Update the cell in the sheet with the price
+                    priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice.text
+                else:
+                    priceWatchDataFrame.loc[eachItem, 'Price'] = "Please check Product in the system!"
+
+                # # Update the cell in the sheet with the price
+                # priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice.text
         except HTTPError as http_err:
             logging.error("HTTP Error: %s", http_err)
         except Exception as err:

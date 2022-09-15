@@ -124,3 +124,5 @@ def test_retry_session_a_non_existing_url_n_times_and_fails(caplog):
     assert "Retry(total=0, " in caplog.records[2].message
     assert "Retry(total=1, " in caplog.records[1].message
     assert "Retry(total=2, " in caplog.records[0].message
+
+    # TODO: Write test to handle error when Product URL does not exist (e.g. https://www.tesco.com/groceries/en-GB/products/311424196)
