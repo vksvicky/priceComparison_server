@@ -10,10 +10,9 @@ from tqdm import tqdm
 from pricecomparison.utilities import FILENAME, update_excel, retry_session, SuperMarkets, setup_logging
 
 urllib3.disable_warnings()
-setup_logging(logging.DEBUG, "%s" % SuperMarkets.Asda.lower())
+setup_logging(logging.DEBUG, f"{SuperMarkets.Asda.lower()}")
 
 BASE_URL = "https://groceries.asda.com/api/bff/graphql"
-priceWatchXLS = _pandas.ExcelFile(FILENAME)
 sheetNamesList = [SuperMarkets.Asda]
 
 try:
@@ -69,10 +68,10 @@ try:
 
                 priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
         except HTTPError as http_err:
-            logging.error("HTTP Error: %s", http_err)
+            logging.error(f"HTTP Error: {http_err}")
         except Exception as err:
-            logging.error("Other Error: %s", err)
+            logging.error(f"Other Error: {err}")
 
         update_excel(FILENAME, eachSheet, priceWatchDataFrame)
 except Exception as general_err:
-    logging.error("Error occurred: %s", general_err)
+    logging.error(f"Error occurred: {general_err}")

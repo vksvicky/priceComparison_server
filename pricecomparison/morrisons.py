@@ -12,7 +12,6 @@ from pricecomparison.utilities import FILENAME, update_excel, retry_session, set
 urllib3.disable_warnings()
 setup_logging(logging.DEBUG, "%s" % SuperMarkets.Morrisons.lower())
 
-priceWatchXLS = _pandas.ExcelFile(FILENAME)
 sheetNamesList = [SuperMarkets.Morrisons]
 
 try:

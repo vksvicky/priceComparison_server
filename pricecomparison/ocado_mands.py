@@ -10,7 +10,6 @@ from pricecomparison.utilities import FILENAME, retry_session, update_excel, set
 
 setup_logging(logging.DEBUG, "%s" % SuperMarkets.Ocado.lower())
 
-priceWatchXLS = _pandas.ExcelFile(FILENAME)
 sheetNamesList = [SuperMarkets.Ocado]
 
 try:

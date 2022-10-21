@@ -14,7 +14,6 @@ urllib3.disable_warnings()
 setup_logging(logging.DEBUG, "%s" % SuperMarkets.Aldi.lower())
 
 BASE_URL = "https://groceries.aldi.co.uk/api/product/calculatePrices"
-priceWatchXLS = _pandas.ExcelFile(FILENAME)
 sheetNamesList = [SuperMarkets.Aldi]
 
 try:
@@ -22,24 +21,28 @@ try:
         priceWatchDataFrame = _pandas.read_excel(FILENAME, sheet_name=eachSheet, engine="openpyxl")
 
         numberOfRows = priceWatchDataFrame.shape[0]
+        index = -1
 
         # Reading the URL for each row in the sheet
         try:
+            # create a process pool that uses all cpus
+            # with multiprocessing.Pool() as pool:
             for eachItem in tqdm(range(0, numberOfRows, 1), "Retrieving data..."):
+
                 productURL = priceWatchDataFrame.loc[eachItem, 'URL']
 
-                # If productURL does not exist, just move the next item in the loop
-                if _pandas.isna(productURL):
-                    continue
-
+                # # If productURL does not exist, just move the next item in the loop
+                # if _pandas.isna(productURL):
+                #     continue
+                index += 1
                 # Get product Id from URL
-                productId = str(productURL).split("/")
+                productId = str(productURL).rsplit("/")
 
                 _headers = {
+                    "Authority": "groceries.aldi.co.uk",
                     "Content-Type": "application/json",
                     "Accept-Language": "en-GB",
-                    "Host": "groceries.aldi.co.uk",
-                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/15.5 Safari/605.1.15",
+                    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/106.0.0.0 Safari/537.36",
                     "X-Requested-With": "XMLHttpRequest"
                 }
 
@@ -55,11 +58,14 @@ try:
 
                 if productDetails.status_code == 200:
                     productDetailsContent = json.loads(productDetails.content)
-                    productPrice = productDetailsContent['ProductPrices'][0]['ListPrice'].lstrip('£')
-                    priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
+                    if len(productDetailsContent['ProductPrices']) > 0:
+                        productPrice = productDetailsContent['ProductPrices'][0]['ListPrice'].lstrip('£')
+                    else:
+                        productPrice = 0
                 else:
                     logging.error("HTTP Error: %s, %s", productDetails.status_code, productDetails.reason)
 
+                priceWatchDataFrame.loc[eachItem, 'Price'] = productPrice
         except HTTPError as http_err:
             logging.error("HTTP Error: %s", http_err)
         except Exception as err:

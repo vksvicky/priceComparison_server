@@ -9,7 +9,6 @@ from pricecomparison.utilities import FILENAME, update_excel, retry_session, set
 
 setup_logging(logging.DEBUG, "%s" % SuperMarkets.Coop.lower())
 
-priceWatchXLS = _pandas.ExcelFile(FILENAME)
 sheetNamesList = [SuperMarkets.Coop]
 
 try:
