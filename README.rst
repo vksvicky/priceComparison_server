@@ -67,6 +67,8 @@ TODO
 
         [X] Aldi
 
+        [X] WattsFarm - Local farm's store
+
 [ ] Parallel process to retrieve product prices from each provider
 
 [ ] Create a sheet in Excel to find the cheapest store for the listed products

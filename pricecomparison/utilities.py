@@ -14,7 +14,6 @@ from urllib3 import Retry
 
 FILENAME = 'pricewatch.xlsx'
 
-
 class SuperMarkets(str, Enum):
     Aldi = 'Aldi'
     Asda = 'Asda'
@@ -23,7 +22,7 @@ class SuperMarkets(str, Enum):
     Ocado = 'Ocado'
     Sainsburys = 'Sainsburys'
     Tesco = 'Tesco'
-
+    WattsFarms = 'WattsFarms'
 
 def update_excel(filename, sheetname, dataframe):
     "Function to update the specific sheet in the excel_file"
